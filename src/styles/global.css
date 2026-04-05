@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+/* ============================================
+   THEME — Dark Military-Patriotic Palette
+   ============================================ */
+@theme {
+  /* Dark backgrounds */
+  --color-bg-900: #0D0B09;
+  --color-bg-800: #141210;
+  --color-bg-700: #1A1612;
+  --color-bg-600: #1E1A16;
+  --color-bg-500: #2A2520;
+  --color-bg-400: #352F28;
+
+  /* Gold — medals, orders, accents */
+  --color-gold-50:  #FFF8E1;
+  --color-gold-100: #FFECB3;
+  --color-gold-200: #FFE082;
+  --color-gold-300: #FFD54F;
+  --color-gold-400: #DAA520;
+  --color-gold-500: #d4a544;
+  --color-gold-600: #B8860B;
+  --color-gold-700: #8B6914;
+
+  /* Soviet red — sparingly */
+  --color-red-400: #DC143C;
+  --color-red-500: #CC1133;
+  --color-red-600: #A0102A;
+  --color-red-700: #7A0C20;
+
+  /* Paper / cream text */
+  --color-paper-50:  #FAF3E8;
+  --color-paper-100: #F5E6D3;
+  --color-paper-200: #EBDBC0;
+  --color-paper-300: #DCC9A3;
+  --color-paper-400: #C4A97A;
+  --color-paper-500: #A08050;
+
+  /* George ribbon */
+  --color-george: #E87B2F;
+
+  /* Dark navy — footer */
+  --color-navy-800: #001845;
+  --color-navy-900: #001030;
+
+  /* Success / olive */
+  --color-olive-500: #6B8E23;
+  --color-olive-600: #556B2F;
+}
+
+/* ============================================
+   BASE — Typography, Body
+   ============================================ */
+@layer base {
+  body {
+    font-family: 'PT Serif', 'Georgia', serif;
+    @apply text-paper-100 antialiased;
+    background-color: var(--color-bg-900);
+  }
+
+  h1, h2 {
+    font-family: 'Playfair Display', 'PT Serif', 'Georgia', serif;
+    @apply font-bold;
+  }
+
+  h3, h4 {
+    font-family: 'PT Serif', 'Georgia', serif;
+    @apply font-bold;
+  }
+
+  button, input, select, textarea, nav, .font-sans {
+    font-family: 'PT Sans', 'Inter', system-ui, sans-serif;
+  }
+
+  .font-date {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float-up {
+  0%   { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.8; }
+}
+
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+  25%      { transform: scaleY(1.06) scaleX(0.97); opacity: 1; }
+  50%      { transform: scaleY(0.95) scaleX(1.04); opacity: 0.85; }
+  75%      { transform: scaleY(1.03) scaleX(0.98); opacity: 0.95; }
+}
+
+/* ============================================
+   SCROLL REVEAL — elements animate on scroll
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger children */
+.stagger-children > * {
+  transition-delay: calc(var(--i, 0) * 100ms);
+}
+
+/* ============================================
+   GLASSMORPHISM
+   ============================================ */
+.glass {
+  background: rgba(218, 165, 32, 0.05);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(218, 165, 32, 0.1);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: rgba(26, 22, 18, 0.95);
+  }
+}
+
+/* ============================================
+   GOLD TEXT GRADIENT
+   ============================================ */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFD54F, #DAA520, #B8860B, #DAA520, #FFD54F);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn-gold {
+  @apply font-sans font-bold text-sm tracking-wide px-6 py-3 rounded-lg;
+  background: linear-gradient(135deg, #DAA520, #B8860B);
+  color: #0D0B09;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(218, 165, 32, 0.3);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  @apply font-sans font-bold text-sm tracking-wide px-6 py-3 rounded-lg;
+  border: 1px solid var(--color-gold-500);
+  color: var(--color-gold-400);
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background: rgba(218, 165, 32, 0.1);
+}
+
+/* ============================================
+   GEORGE RIBBON stripe
+   ============================================ */
+.george-stripe {
+  background: repeating-linear-gradient(
+    90deg,
+    #0D0B09 0px, #0D0B09 8px,
+    #E87B2F 8px, #E87B2F 16px
+  );
+  height: 4px;
+}
+
+/* ============================================
+   PARTICLES — CSS-only floating embers
+   ============================================ */
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particles::before,
+.particles::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #DAA520;
+  border-radius: 50%;
+  animation: float-up 8s linear infinite;
+  opacity: 0;
+}
+
+.particles::before {
+  left: 30%;
+  bottom: 0;
+  animation-delay: 0s;
+  animation-duration: 7s;
+}
+
+.particles::after {
+  left: 65%;
+  bottom: 0;
+  animation-delay: 3s;
+  animation-duration: 9s;
+}
+
+/* ============================================
+   SECTION DIVIDER
+   ============================================ */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.2), transparent);
+}
+
+/* ============================================
+   SECTION BACKGROUNDS — visual variety
+   ============================================ */
+
+/* Photo background with dark overlay — used via inline style + this class */
+.section-photo-bg {
+  position: relative;
+}
+.section-photo-bg > img.bg-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.section-photo-bg > .bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.section-photo-bg > .section-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Alternating section tones */
+.bg-section-900 {
+  background-color: var(--color-bg-900);
+}
+.bg-section-800 {
+  background-color: var(--color-bg-800);
+}
+.bg-section-gradient {
+  background: linear-gradient(180deg, var(--color-bg-900) 0%, var(--color-bg-800) 50%, var(--color-bg-900) 100%);
+}
+
+/* Warm glow accent on left */
+.bg-glow-left {
+  background-image:
+    radial-gradient(ellipse 500px 400px at 10% 50%, rgba(218,165,32,0.04) 0%, transparent 70%);
+}
+
+/* Warm glow accent on right */
+.bg-glow-right {
+  background-image:
+    radial-gradient(ellipse 500px 400px at 90% 50%, rgba(218,165,32,0.04) 0%, transparent 70%);
+}
+
+/* Red subtle glow */
+.bg-glow-red {
+  background-image:
+    radial-gradient(ellipse 400px 300px at 50% 30%, rgba(204,17,51,0.03) 0%, transparent 70%);
+}
+
+/* Star ornament divider */
+.star-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+.star-divider::before,
+.star-divider::after {
+  content: '';
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.2), transparent);
+}
+
+/* ============================================
+   SMOOTH SCROLL for anchor links
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   GLASS hover effect
+   ============================================ */
+.glass-hover:hover {
+  border-color: rgba(218, 165, 32, 0.2);
+  background: rgba(218, 165, 32, 0.08);
+}
+
+/* ============================================
+   ANIMATE PULSE for countdown dot
+   ============================================ */
+.animate-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

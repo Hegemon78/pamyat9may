@@ -1,0 +1,134 @@
+---
+/**
+ * Detailed hero stories — emotional section with veteran profiles,
+ * quotes, military details. Encourages users to share their own stories.
+ *
+ * TODO: Replace SVG portrait placeholders with real photos.
+ * TODO: Add "Read full story" modal expand.
+ * TODO: Add submission form for user stories.
+ */
+const stories = [
+  {
+    name: 'Алексей Иванович Петров',
+    rank: 'Старший лейтенант, командир взвода разведки',
+    years: '1919 — 1998',
+    division: '150-я стрелковая дивизия',
+    quote: 'Мы не были героями. Мы просто делали то, что должны были сделать. За страну, за семьи, за тех, кто ждал нас дома.',
+    story: 'Прошёл от Москвы до Берлина. Трижды ранен, но каждый раз возвращался в строй. Участвовал в форсировании Днепра и штурме Зееловских высот.',
+    awards: ['Орден Красной Звезды', 'Медаль «За отвагу»', 'Орден Отечественной войны'],
+    color: '#DAA520',
+  },
+  {
+    name: 'Мария Фёдоровна Козлова',
+    rank: 'Старшина медицинской службы',
+    years: '1923 — 2010',
+    division: '62-я армия, Сталинградский фронт',
+    quote: 'Каждый раненый, которого удавалось спасти — это чей-то отец, чей-то сын. За каждого из них стоило бороться.',
+    story: 'Фронтовая медсестра. Под огнём вынесла более 200 раненых бойцов. Служила в Сталинграде в самые тяжёлые месяцы осени 1942 года.',
+    awards: ['Медаль «За отвагу»', 'Орден Красной Звезды', 'Медаль «За оборону Сталинграда»'],
+    color: '#CC1133',
+  },
+  {
+    name: 'Николай Фёдорович Волков',
+    rank: 'Капитан, лётчик-истребитель',
+    years: '1918 — 1943',
+    division: '5-й истребительный авиаполк',
+    quote: 'Небо — это свобода. И мы дрались за эту свободу на каждой высоте, в каждом бою.',
+    story: '186 боевых вылетов, 12 сбитых самолётов противника. Погиб в воздушном бою на Курской дуге, прикрывая отход наземных войск. Герой Советского Союза посмертно.',
+    awards: ['Герой Советского Союза', 'Два ордена Красного Знамени'],
+    color: '#6B8E23',
+  },
+];
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden" id="stories">
+  <!-- Background with soldiers photo -->
+  <div class="absolute inset-0">
+    <img src="/images/soldiers-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/92"></div>
+    <div class="absolute inset-0 opacity-[0.015]" style="background-image: repeating-linear-gradient(0deg, #DAA520 0, #DAA520 1px, transparent 0, transparent 80px), repeating-linear-gradient(90deg, #DAA520 0, #DAA520 1px, transparent 0, transparent 80px);"></div>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">Они сражались за Родину</span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">Истории героев</h2>
+      <p class="text-paper-300/50 font-sans max-w-xl mx-auto">
+        За каждой наградой — судьба. За каждым именем — подвиг. Вот лишь некоторые из миллионов историй.
+      </p>
+    </div>
+
+    <div class="space-y-6 md:space-y-8">
+      {stories.map((s, i) => (
+        <article class={`reveal glass rounded-2xl overflow-hidden ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`} style={`transition-delay: ${i * 120}ms`}>
+          <div class="flex flex-col md:flex-row">
+            {/* Portrait placeholder */}
+            <div class="w-full md:w-48 lg:w-56 shrink-0 relative overflow-hidden" style={`background: linear-gradient(135deg, ${s.color}15, ${s.color}08);`}>
+              <div class="flex items-center justify-center h-48 md:h-full">
+                <div class="relative">
+                  {/* Silhouette portrait */}
+                  <svg viewBox="0 0 100 120" class="w-24 h-28 md:w-28 md:h-32" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="40" rx="22" ry="26" fill={s.color} opacity="0.2"/>
+                    <ellipse cx="50" cy="28" rx="20" ry="14" fill={s.color} opacity="0.15"/>
+                    <path d="M25 75 Q28 68 38 68 L62 68 Q72 68 75 75 L80 120 L20 120 Z" fill={s.color} opacity="0.15"/>
+                    <rect x="28" y="70" width="15" height="4" rx="1" fill={s.color} opacity="0.2" transform="rotate(-5 35 72)"/>
+                    <rect x="57" y="70" width="15" height="4" rx="1" fill={s.color} opacity="0.2" transform="rotate(5 64 72)"/>
+                  </svg>
+                  {/* Medal decorations */}
+                  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-1">
+                    {s.awards.slice(0, 3).map((_, j) => (
+                      <div class="w-3 h-3 rounded-full border" style={`border-color: ${s.color}40; background: ${s.color}20;`}></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* TODO: Replace with real photo — <img src={s.photo} alt={s.name} class="w-full h-full object-cover" /> */}
+            </div>
+
+            {/* Content */}
+            <div class="flex-1 p-6 md:p-8">
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                <div>
+                  <h3 class="text-paper-50 text-lg md:text-xl font-bold">{s.name}</h3>
+                  <div class="text-paper-300/50 text-sm font-sans">{s.rank}</div>
+                  <div class="flex items-center gap-3 mt-1">
+                    <span class="font-date text-gold-600 text-xs">{s.years}</span>
+                    <span class="text-paper-300/20">|</span>
+                    <span class="text-paper-300/30 text-xs font-sans">{s.division}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quote */}
+              <blockquote class="relative pl-4 mb-4" style={`border-left: 2px solid ${s.color}40;`}>
+                <p class="text-paper-200/70 text-sm italic leading-relaxed">
+                  &laquo;{s.quote}&raquo;
+                </p>
+              </blockquote>
+
+              <p class="text-paper-300/50 text-sm font-sans leading-relaxed mb-4">{s.story}</p>
+
+              {/* Awards */}
+              <div class="flex flex-wrap gap-2">
+                {s.awards.map((award) => (
+                  <span class="text-[11px] font-sans px-2 py-0.5 rounded-full" style={`background: ${s.color}10; color: ${s.color}; border: 1px solid ${s.color}20;`}>
+                    {award}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="text-center mt-10 reveal">
+      <p class="text-paper-300/40 text-sm font-sans mb-4">
+        У каждой семьи есть свой герой. Расскажите о нём.
+      </p>
+      <a href="#stories-form" class="btn-gold">
+        Рассказать свою историю
+      </a>
+    </div>
+  </div>
+</section>

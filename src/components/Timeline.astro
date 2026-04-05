@@ -1,0 +1,51 @@
+---
+/**
+ * Vertical timeline of WWII key events.
+ * Scroll-reveal animations with staggered delays.
+ *
+ * TODO: Add expandable details on click for each event.
+ * TODO: Add parallax effect on timeline line.
+ * TODO: Improve mobile layout — stack cards centered.
+ */
+import { events } from '../data/timeline';
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden" id="timeline">
+  <!-- Map background -->
+  <div class="absolute inset-0">
+    <img src="/images/map-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/90"></div>
+  </div>
+  <div class="relative max-w-4xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">Хронология</span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">1 418 дней мужества</h2>
+      <p class="text-paper-300/50 font-sans max-w-xl mx-auto">
+        Ключевые события Великой Отечественной войны, изменившие ход мировой истории
+      </p>
+    </div>
+
+    <div class="relative">
+      <!-- Vertical line -->
+      <div class="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold-400/40 via-gold-400/20 to-transparent"></div>
+
+      <div class="space-y-8 md:space-y-12">
+        {events.map((event, i) => (
+          <div class={`relative flex items-start gap-6 md:gap-0 reveal ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`} style={`transition-delay: ${i * 80}ms`}>
+            <!-- Dot on timeline -->
+            <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-gold-400 border-2 border-bg-900 z-10 mt-1.5"></div>
+
+            <!-- Content card -->
+            <div class={`ml-10 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
+              <div class="glass rounded-xl p-5 hover:border-gold-400/20 transition-colors">
+                <span class="font-date text-gold-400 text-xs">{event.date}</span>
+                <h3 class="text-paper-50 text-lg mt-1 mb-2">{event.title}</h3>
+                <p class="text-paper-300/50 text-sm font-sans leading-relaxed">{event.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

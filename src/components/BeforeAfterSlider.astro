@@ -1,0 +1,170 @@
+---
+/**
+ * Before/After interactive slider for photo restoration demo.
+ * Pure CSS clip-path + range input — no JS dependencies.
+ *
+ * TODO: Replace SVG placeholders with real before/after photos.
+ * TODO: Add touch gesture support for better mobile UX.
+ * TODO: Add multiple photo pairs with carousel/tabs.
+ */
+interface Props {
+  beforeLabel?: string;
+  afterLabel?: string;
+}
+
+const { beforeLabel = 'Было', afterLabel = 'Стало' } = Astro.props;
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden" id="revive">
+  <div class="absolute inset-0">
+    <img src="/images/archive-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-800/95"></div>
+  </div>
+  <div class="relative">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">AI-восстановление</span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">Оживите фотографию ветерана</h2>
+      <p class="text-paper-300/50 font-sans max-w-xl mx-auto">
+        Искусственный интеллект восстановит повреждённое фото, добавит цвет и чёткость. Сохраните память в лучшем качестве.
+      </p>
+    </div>
+
+    <div class="max-w-md mx-auto reveal">
+      <div class="ba-container relative rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+        <div class="ba-wrapper relative aspect-[3/4]">
+          <!-- BEFORE image (grayscale, damaged) -->
+          <div class="ba-before absolute inset-0">
+            <svg viewBox="0 0 300 400" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bgBefore" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#5C5549"/>
+                  <stop offset="100%" style="stop-color:#3A352F"/>
+                </linearGradient>
+                <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gn"/><feBlend mode="multiply" in="SourceGraphic" in2="gn"/></filter>
+              </defs>
+              <rect width="300" height="400" fill="url(#bgBefore)" filter="url(#grain)"/>
+              <!-- Portrait silhouette -->
+              <ellipse cx="150" cy="130" rx="48" ry="58" fill="#7A7268" opacity="0.7"/>
+              <ellipse cx="150" cy="95" rx="46" ry="30" fill="#5C5549" opacity="0.6"/>
+              <!-- Eyes -->
+              <ellipse cx="132" cy="128" rx="8" ry="5" fill="#4A4238" opacity="0.5"/>
+              <ellipse cx="168" cy="128" rx="8" ry="5" fill="#4A4238" opacity="0.5"/>
+              <!-- Uniform -->
+              <path d="M80 200 Q85 195 110 195 L190 195 Q215 195 220 200 L225 400 L75 400 Z" fill="#5C5549" opacity="0.6"/>
+              <!-- Shoulder boards -->
+              <rect x="82" y="197" width="35" height="10" rx="2" fill="#6B6358" opacity="0.5" transform="rotate(-5 99 202)"/>
+              <rect x="183" y="197" width="35" height="10" rx="2" fill="#6B6358" opacity="0.5" transform="rotate(5 200 202)"/>
+              <!-- Medals -->
+              <circle cx="120" cy="225" r="7" stroke="#8A8278" stroke-width="0.6" fill="none" opacity="0.2"/>
+              <circle cx="108" cy="225" r="7" stroke="#8A8278" stroke-width="0.6" fill="none" opacity="0.15"/>
+              <!-- Damage -->
+              <line x1="40" y1="60" x2="220" y2="90" stroke="#8A8278" stroke-width="0.7" opacity="0.35"/>
+              <ellipse cx="240" cy="120" rx="30" ry="40" fill="#6B6358" opacity="0.15"/>
+              <polygon points="0,0 40,0 0,40" fill="#3A352F" opacity="0.3"/>
+              <text x="150" y="385" text-anchor="middle" fill="#A08050" font-size="10" font-family="monospace" opacity="0.4" letter-spacing="2">1943</text>
+            </svg>
+          </div>
+
+          <!-- AFTER image (colorized, restored) -->
+          <div class="ba-after absolute inset-0" style="clip-path: inset(0 50% 0 0);">
+            <svg viewBox="0 0 300 400" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bgAfter" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#7A9B6E"/>
+                  <stop offset="100%" style="stop-color:#4A6B3E"/>
+                </linearGradient>
+                <radialGradient id="skinGrad" cx="50%" cy="40%" r="50%">
+                  <stop offset="0%" style="stop-color:#E8C9A0"/>
+                  <stop offset="100%" style="stop-color:#D4A878"/>
+                </radialGradient>
+              </defs>
+              <rect width="300" height="400" fill="url(#bgAfter)"/>
+              <!-- Clean portrait -->
+              <ellipse cx="150" cy="130" rx="48" ry="58" fill="url(#skinGrad)"/>
+              <ellipse cx="150" cy="95" rx="46" ry="30" fill="#5C3D1E"/>
+              <!-- Clear eyes -->
+              <ellipse cx="132" cy="128" rx="8" ry="5" fill="#FFFFFF"/>
+              <ellipse cx="168" cy="128" rx="8" ry="5" fill="#FFFFFF"/>
+              <ellipse cx="132" cy="127" rx="3.5" ry="3.5" fill="#4A7C59"/>
+              <ellipse cx="168" cy="127" rx="3.5" ry="3.5" fill="#4A7C59"/>
+              <!-- Nose and mouth -->
+              <path d="M148 132 L145 152 Q150 156 155 152 L152 132" fill="#D4A878" opacity="0.5"/>
+              <path d="M138 164 Q150 170 162 164" stroke="#B8896A" stroke-width="1.5" fill="none"/>
+              <!-- Green uniform -->
+              <path d="M80 200 Q85 195 110 195 L190 195 Q215 195 220 200 L225 400 L75 400 Z" fill="#556B2F"/>
+              <!-- Gold shoulder boards -->
+              <rect x="82" y="197" width="35" height="10" rx="2" fill="#DAA520" transform="rotate(-5 99 202)"/>
+              <rect x="183" y="197" width="35" height="10" rx="2" fill="#DAA520" transform="rotate(5 200 202)"/>
+              <!-- Gold medals -->
+              <circle cx="120" cy="225" r="8" fill="#FFD700" opacity="0.8"/>
+              <circle cx="108" cy="225" r="8" fill="#DAA520" opacity="0.7"/>
+              <circle cx="120" cy="225" r="4" fill="#CC1133" opacity="0.6"/>
+              <!-- Medal ribbons -->
+              <rect x="115" y="212" width="10" height="5" fill="#CC1133" rx="1"/>
+              <rect x="103" y="212" width="10" height="5" fill="#E87B2F" rx="1"/>
+              <text x="150" y="385" text-anchor="middle" fill="#FFD700" font-size="10" font-family="monospace" opacity="0.6" letter-spacing="2">1943</text>
+            </svg>
+          </div>
+
+          <!-- Slider control -->
+          <input type="range" min="0" max="100" value="50" class="ba-slider" aria-label="Сравнение до и после" />
+
+          <!-- Slider line -->
+          <div class="ba-line absolute top-0 bottom-0 w-0.5 bg-white/80 pointer-events-none" style="left: 50%;">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 text-bg-900" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 4l-6 8 6 8M16 4l6 8-6 8"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Labels -->
+          <div class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-sans font-bold uppercase tracking-wider bg-black/60 text-paper-300/80">{beforeLabel}</div>
+          <div class="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-sans font-bold uppercase tracking-wider bg-gold-500/80 text-bg-900">{afterLabel}</div>
+        </div>
+      </div>
+
+      <!-- Photo Upload form -->
+      <div class="mt-10 reveal" id="photo-upload">
+        <slot name="upload" />
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<style>
+  .ba-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 10;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .ba-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1px;
+    height: 100%;
+  }
+</style>
+
+<script>
+  const slider = document.querySelector('.ba-slider') as HTMLInputElement;
+  const afterEl = document.querySelector('.ba-after') as HTMLElement;
+  const lineEl = document.querySelector('.ba-line') as HTMLElement;
+
+  if (slider && afterEl && lineEl) {
+    slider.addEventListener('input', () => {
+      const val = slider.value;
+      afterEl.style.clipPath = `inset(0 ${100 - Number(val)}% 0 0)`;
+      lineEl.style.left = `${val}%`;
+    });
+  }
+</script>

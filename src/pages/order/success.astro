@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Заказ оформлен">
+  <section class="py-16 md:py-24 min-h-[60vh] flex items-center">
+    <div class="max-w-lg mx-auto px-4 text-center">
+      <div class="w-16 h-16 rounded-full bg-olive-500/20 flex items-center justify-center mx-auto mb-6">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-olive-500" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+
+      <h1 class="text-2xl md:text-4xl text-paper-50 mb-4">Оплата прошла успешно!</h1>
+
+      <div id="order-status" class="glass rounded-xl p-6 mb-6">
+        <p class="text-paper-300/60 font-sans text-sm" id="status-text">Проверяем статус заказа...</p>
+        <div id="status-spinner" class="mt-4">
+          <div class="w-8 h-8 border-2 border-gold-400/20 border-t-gold-400 rounded-full mx-auto" style="animation: spin 1s linear infinite;"></div>
+        </div>
+        <div id="status-done" class="hidden mt-4">
+          <p class="text-paper-50 font-bold mb-2">Отчёт готов!</p>
+          <a id="report-link" href="#" class="btn-gold inline-block">Скачать отчёт</a>
+        </div>
+      </div>
+
+      <p class="text-paper-300/40 text-xs font-sans">
+        Результат будет отправлен на email. Обычно обработка занимает 5-15 минут.
+      </p>
+
+      <div class="mt-8">
+        <a href="/" class="btn-outline text-sm">На главную</a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <script>
+    const API_URL = 'http://localhost:8081';
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('order_id') || window.location.pathname.split('/').filter(Boolean).pop();
+
+    if (orderId && orderId !== 'success') {
+      const statusText = document.getElementById('status-text');
+      const spinner = document.getElementById('status-spinner');
+      const done = document.getElementById('status-done');
+      const reportLink = document.getElementById('report-link') as HTMLAnchorElement;
+
+      const poll = async () => {
+        try {
+          const res = await fetch(`${API_URL}/api/order/${orderId}`);
+          if (!res.ok) return;
+          const data = await res.json();
+
+          if (data.status === 'completed') {
+            statusText!.textContent = `Заказ ${orderId} выполнен`;
+            spinner!.classList.add('hidden');
+            done!.classList.remove('hidden');
+            if (data.result_available) {
+              reportLink!.href = `${API_URL}/results/${orderId}/report.html`;
+            }
+            clearInterval(interval);
+          } else if (data.status === 'processing') {
+            statusText!.textContent = 'Обрабатываем ваш заказ...';
+          } else if (data.status === 'paid') {
+            statusText!.textContent = 'Оплата получена, начинаем обработку...';
+          }
+        } catch { /* retry */ }
+      };
+
+      poll();
+      const interval = setInterval(poll, 5000);
+    }
+  </script>
+</BaseLayout>

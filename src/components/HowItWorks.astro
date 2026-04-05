@@ -1,0 +1,64 @@
+---
+/**
+ * 3-step process section explaining how the service works.
+ *
+ * TODO: Add animated SVG illustrations for each step.
+ * TODO: Add connecting arrows/lines between steps on desktop.
+ */
+const steps = [
+  {
+    number: '01',
+    title: 'Загрузите фото',
+    description: 'Отправьте старую фотографию ветерана нашему Telegram-боту. Подойдёт даже повреждённое или выцветшее фото.',
+    icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+  },
+  {
+    number: '02',
+    title: 'AI восстановит',
+    description: 'Искусственный интеллект уберёт повреждения, добавит цвет и улучшит чёткость. Результат за 2 минуты.',
+    icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+  },
+  {
+    number: '03',
+    title: 'Поделитесь историей',
+    description: 'Разместите восстановленное фото на Стене памяти и расскажите историю вашего героя. Помним вместе.',
+    icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+  }
+];
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden">
+  <div class="absolute inset-0">
+    <img src="/images/cta-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/94"></div>
+  </div>
+  <div class="relative">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">Как это работает</span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">Три простых шага</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 md:gap-8 stagger-children">
+      {steps.map((step) => (
+        <div class="reveal text-center md:text-left">
+          <div class="glass rounded-2xl p-6 md:p-8 h-full hover:border-gold-400/20 transition-all group">
+            <!-- Icon -->
+            <div class="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center mb-5 mx-auto md:mx-0 group-hover:bg-gold-500/20 transition-colors">
+              <svg viewBox="0 0 24 24" class="w-6 h-6 text-gold-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={step.icon}/>
+              </svg>
+            </div>
+
+            <!-- Number -->
+            <span class="font-date text-gold-600 text-xs">{step.number}</span>
+
+            <h3 class="text-paper-50 text-lg mt-1 mb-3">{step.title}</h3>
+            <p class="text-paper-300/50 text-sm font-sans leading-relaxed">{step.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  </div>
+</section>

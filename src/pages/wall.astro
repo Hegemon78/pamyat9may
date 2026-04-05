@@ -1,0 +1,102 @@
+---
+/**
+ * Memory Wall — full page with all submitted stories.
+ * Fetches stories from bot API on page load.
+ *
+ * TODO: Add infinite scroll / pagination.
+ * TODO: Add search and filter by year/name.
+ * TODO: Add photo display when available.
+ * TODO: Add share individual story button.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// In production, fetch from bot API. For static build, use sample data.
+const BOT_API = import.meta.env.BOT_API_URL || 'http://localhost:8081';
+
+let stories: any[] = [];
+let error = false;
+
+try {
+  const res = await fetch(`${BOT_API}/api/stories?limit=50`);
+  if (res.ok) {
+    stories = await res.json();
+  }
+} catch {
+  // API not available — show sample data
+  error = true;
+}
+
+// Fallback sample stories when API is down
+if (stories.length === 0) {
+  stories = [
+    { hero_name: 'Иван Петрович Сидоров', text: 'Мой дедушка прошёл всю войну от Москвы до Берлина. Командир разведвзвода, дважды ранен. Награждён орденом Красной Звезды за операцию под Курском. Мы помним и гордимся.', user_name: 'Мария С.', created_at: '2026-04-20' },
+    { hero_name: 'Николай Фёдорович Волков', text: 'Капитан, лётчик-истребитель. 186 боевых вылетов, 12 сбитых самолётов противника. Погиб в бою на Курской дуге. Герой Советского Союза посмертно. Навечно в наших сердцах.', user_name: 'Алексей В.', created_at: '2026-04-19' },
+    { hero_name: 'Анна Степановна Белова', text: 'С 16 лет работала на оборонном заводе в Челябинске, точила снаряды по 12 часов. Медаль «За доблестный труд в Великой Отечественной войне». До последних дней вспоминала подруг по цеху.', user_name: 'Елена Б.', created_at: '2026-04-18' },
+    { hero_name: 'Мария Ивановна Козлова', text: 'Фронтовая медсестра, старшина медицинской службы. Вынесла с поля боя более 200 раненых бойцов. Медаль «За отвагу», орден Красной Звезды. Всю жизнь проработала врачом в районной больнице.', user_name: 'Дмитрий К.', created_at: '2026-04-17' },
+    { hero_name: 'Пётр Иванович Громов', text: 'Танкист, механик-водитель Т-34. Участвовал в Сталинградской битве, Курской дуге, освобождении Праги. Горел в танке дважды, но вернулся в строй. Дожил до 95 лет.', user_name: 'Ольга Г.', created_at: '2026-04-16' },
+    { hero_name: 'Василий Андреевич Кузнецов', text: 'Партизан в Белоруссии. Пустил под откос 3 эшелона с вражеской техникой. После войны восстанавливал разрушенный Минск. Всегда говорил: «Главное — чтобы дети не знали войны».', user_name: 'Наталья К.', created_at: '2026-04-15' },
+  ];
+}
+---
+
+<BaseLayout title="Стена памяти" description="Истории о героях Великой Отечественной войны. Расскажите о своём ветеране.">
+  <section class="py-16 md:py-24 min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+      <!-- Header -->
+      <div class="text-center mb-14">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="h-px w-16 bg-gradient-to-r from-transparent to-gold-400/30"></div>
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-gold-400" fill="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <div class="h-px w-16 bg-gradient-to-l from-transparent to-gold-400/30"></div>
+        </div>
+        <h1 class="text-3xl md:text-5xl text-paper-50 mb-4">Стена памяти</h1>
+        <p class="text-paper-300/50 font-sans max-w-xl mx-auto mb-8">
+          Каждая история — живая память о героях Великой Отечественной войны
+        </p>
+        <a href="https://t.me/pamyat9may_bot?start=wall" target="_blank" rel="noopener" class="btn-gold">
+          Рассказать о своём герое
+        </a>
+      </div>
+
+      {error && (
+        <div class="glass rounded-xl p-4 text-center text-paper-300/50 text-sm font-sans mb-8">
+          Показаны примеры историй. Для реальных данных запустите Telegram-бота.
+        </div>
+      )}
+
+      <!-- Stories grid -->
+      <div class="grid md:grid-cols-2 gap-5 stagger-children">
+        {stories.map((story, i) => (
+          <article class="reveal glass rounded-xl p-6 hover:border-gold-400/20 transition-all" style={`transition-delay: ${i * 60}ms`}>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-gold-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                <svg viewBox="0 0 24 24" class="w-5 h-5 text-gold-400" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-paper-50 font-bold text-base">{story.hero_name}</h2>
+                <p class="text-paper-300/50 text-sm font-sans leading-relaxed mt-2">{story.text}</p>
+                <div class="flex items-center justify-between mt-3">
+                  <span class="text-paper-300/30 text-xs font-sans">— {story.user_name}</span>
+                  {story.created_at && (
+                    <span class="font-date text-gold-600/40 text-[10px]">{story.created_at}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* TODO: Add pagination / load more button */}
+      <div class="text-center mt-12">
+        <p class="text-paper-300/30 text-xs font-sans">
+          {stories.length} историй на стене
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

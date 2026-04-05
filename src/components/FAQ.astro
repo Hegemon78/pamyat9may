@@ -1,0 +1,65 @@
+---
+/**
+ * FAQ accordion section.
+ *
+ * TODO: Smooth height animation on expand/collapse (currently instant).
+ * TODO: Add search/filter for questions.
+ */
+const faqs = [
+  {
+    q: 'Как работает AI-восстановление фото?',
+    a: 'Наш искусственный интеллект анализирует повреждённое фото, восстанавливает утраченные фрагменты, добавляет цвет на основе исторических данных и улучшает чёткость. Результат — художественная интерпретация, максимально близкая к оригиналу.'
+  },
+  {
+    q: 'Это бесплатно?',
+    a: 'Да, базовое восстановление фотографии полностью бесплатно. Вы можете восстановить одно фото и разместить историю на Стене памяти без какой-либо оплаты.'
+  },
+  {
+    q: 'Какие фотографии подходят?',
+    a: 'Подойдут любые фотографии: чёрно-белые, выцветшие, повреждённые, с царапинами. Чем лучше качество исходника, тем лучше результат, но AI справится даже с сильно повреждёнными снимками.'
+  },
+  {
+    q: 'Как разместить историю на Стене памяти?',
+    a: 'Отправьте команду /story нашему Telegram-боту, укажите имя героя и расскажите его историю. Она появится на Стене памяти на сайте после модерации.'
+  },
+  {
+    q: 'Можно ли пройти викторину несколько раз?',
+    a: 'Конечно! Викторина доступна неограниченное количество раз. Каждый раз порядок ответов меняется. Попробуйте набрать 10 из 10!'
+  },
+  {
+    q: 'Мои данные в безопасности?',
+    a: 'Мы не храним ваши фотографии после обработки. Истории на Стене памяти публикуются только с вашего согласия. Мы не передаём данные третьим лицам.'
+  }
+];
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden" id="faq">
+  <div class="absolute inset-0">
+    <img src="/images/archive-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/92"></div>
+  </div>
+  <div class="relative">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">Вопросы</span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">Частые вопросы</h2>
+    </div>
+
+    <div class="space-y-3 stagger-children">
+      {faqs.map((faq, i) => (
+        <details class="group reveal glass rounded-xl overflow-hidden" style={`transition-delay: ${i * 60}ms`}>
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-sans text-paper-100 hover:text-gold-300 transition-colors list-none">
+            <span class="pr-4 text-sm md:text-base">{faq.q}</span>
+            <svg class="w-5 h-5 shrink-0 text-gold-500 transition-transform group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </summary>
+          <div class="px-5 pb-5 text-paper-300/60 text-sm font-sans leading-relaxed">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+  </div>
+</section>

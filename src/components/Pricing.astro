@@ -1,0 +1,191 @@
+---
+/**
+ * Pricing tiers section — 4 cards in responsive grid.
+ *
+ * Tiers: Пробник (free) / AI-реставрация (299₽) / Боевой путь (1990₽) / Память семьи (4990₽)
+ */
+
+const tiers = [
+  {
+    id: "free",
+    name: "Пробник",
+    price: "Бесплатно",
+    priceNote: null,
+    tag: null,
+    features: [
+      "Поиск по архивам (количество записей)",
+      "Базовое улучшение фото (Pillow)",
+      "Викторина со скидкой",
+    ],
+    cta: "Попробовать",
+    ctaHref: "#revive",
+    ctaStyle: "outline",
+    highlighted: false,
+  },
+  {
+    id: "photo_ai",
+    name: "AI-реставрация",
+    price: "299",
+    priceNote: "руб",
+    tag: "Популярное",
+    features: [
+      "Всё из «Пробника»",
+      "AI-восстановление + колоризация",
+      "Анимация лица (видео-портрет)",
+      "Скачивание без водяного знака",
+    ],
+    cta: "Заказать",
+    ctaHref: "#order-form",
+    ctaStyle: "gold",
+    highlighted: true,
+  },
+  {
+    id: "combat_path",
+    name: "Боевой путь",
+    price: "1 990",
+    priceNote: "руб",
+    tag: null,
+    features: [
+      "Полный поиск по 6 базам",
+      "AI-анализ и нарратив (Claude)",
+      "HTML/PDF отчёт с наградами",
+      "Хронология боевого пути",
+    ],
+    cta: "Заказать",
+    ctaHref: "#order-form",
+    ctaStyle: "gold",
+    highlighted: false,
+  },
+  {
+    id: "family_memory",
+    name: "Память семьи",
+    price: "4 990",
+    priceNote: "руб",
+    tag: "Максимум",
+    features: [
+      "До 3 человек",
+      "Всё из «Боевого пути» для каждого",
+      "AI-реставрация фото",
+      "Мемориальное видео",
+    ],
+    cta: "Заказать",
+    ctaHref: "#order-form",
+    ctaStyle: "gold",
+    highlighted: false,
+  },
+];
+---
+
+<section class="py-16 md:py-24 bg-bg-800" id="pricing">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <!-- Header -->
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">
+        Услуги
+      </span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">
+        Сохраните память навсегда
+      </h2>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 stagger-children">
+      {tiers.map((tier) => (
+        <div class="reveal flex flex-col">
+          <div
+            class={[
+              "flex flex-col h-full rounded-2xl p-6 transition-all duration-300 group",
+              "backdrop-blur-xl",
+              tier.highlighted
+                ? "border border-gold-400/30 hover:border-gold-400/50"
+                : "glass hover:border-gold-400/20",
+            ].join(" ")}
+            style={tier.highlighted
+              ? "background: rgba(218, 165, 32, 0.08); backdrop-filter: blur(16px); border-radius: 1rem;"
+              : undefined}
+          >
+            <!-- Tag -->
+            <div class="flex items-start justify-between mb-4">
+              <span class="text-paper-300/50 font-sans text-xs font-bold uppercase tracking-widest">
+                {tier.name}
+              </span>
+              {tier.tag && (
+                <span class="text-[0.625rem] font-sans font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                  style="background: rgba(218, 165, 32, 0.15); color: var(--color-gold-400); border: 1px solid rgba(218, 165, 32, 0.25);">
+                  {tier.tag}
+                </span>
+              )}
+            </div>
+
+            <!-- Price -->
+            <div class="mb-6">
+              {tier.priceNote ? (
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-4xl font-bold font-serif text-gold-400">
+                    {tier.price}
+                  </span>
+                  <span class="text-paper-300/50 font-sans text-sm">
+                    {tier.priceNote}
+                  </span>
+                </div>
+              ) : (
+                <span class="text-4xl font-bold font-serif text-gold-400">
+                  {tier.price}
+                </span>
+              )}
+            </div>
+
+            <!-- Divider -->
+            <div class="h-px bg-gold-400/10 mb-5"></div>
+
+            <!-- Features list -->
+            <ul class="flex flex-col gap-3 mb-8 flex-1">
+              {tier.features.map((feature) => (
+                <li class="flex items-start gap-2.5">
+                  <!-- Checkmark SVG -->
+                  <svg
+                    viewBox="0 0 24 24"
+                    class="w-4 h-4 mt-0.5 text-gold-500 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                  <span class="text-paper-300/70 font-sans text-sm leading-snug">
+                    {feature}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- CTA Button -->
+            {tier.ctaStyle === "gold" ? (
+              <a
+                href={tier.ctaHref}
+                class="block text-center font-sans font-bold text-sm py-3 px-5 rounded-lg transition-opacity duration-200 hover:opacity-90"
+                style="background: linear-gradient(135deg, #DAA520, #B8860B); color: #0D0B09; text-decoration: none;"
+              >
+                {tier.cta}
+              </a>
+            ) : (
+              <a
+                href={tier.ctaHref}
+                class="block text-center font-sans font-bold text-sm py-3 px-5 rounded-lg transition-all duration-200"
+                style="border: 1px solid var(--color-gold-500); color: var(--color-gold-400); text-decoration: none; background: transparent;"
+                onmouseover="this.style.background='rgba(218,165,32,0.05)'"
+                onmouseout="this.style.background='transparent'"
+              >
+                {tier.cta}
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

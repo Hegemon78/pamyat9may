@@ -1,0 +1,207 @@
+---
+/**
+ * Hero section — cinematic full-screen with military background pattern,
+ * eternal flame, countdown to Victory Day, floating particles.
+ */
+
+// Calculate days until May 9
+const victoryDay = new Date(2026, 4, 9); // May 9, 2026
+const now = new Date();
+const daysLeft = Math.max(0, Math.ceil((victoryDay.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-900" id="hero">
+  <!-- Background photo + overlays -->
+  <div class="absolute inset-0">
+    <!-- Photo background -->
+    <img src="/images/hero-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="eager" />
+    <!-- Dark gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-bg-900/85 via-bg-900/70 to-bg-900/95"></div>
+    <!-- Radial vignette -->
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 50% at 50% 40%, transparent 0%, rgba(13,11,9,0.8) 100%);"></div>
+    <!-- Large star watermark -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.03]">
+      <svg viewBox="0 0 200 200" class="w-[600px] h-[600px]" fill="#DAA520">
+        <path d="M100 10 L120 75 L190 75 L132 115 L155 180 L100 140 L45 180 L68 115 L10 75 L80 75 Z"/>
+      </svg>
+    </div>
+    <!-- Diagonal line pattern (military blueprint feel) -->
+    <div class="absolute inset-0 opacity-[0.02]" style="background-image: repeating-linear-gradient(45deg, #DAA520 0, #DAA520 1px, transparent 0, transparent 50%); background-size: 60px 60px;"></div>
+    <!-- Noise texture -->
+    <div class="absolute inset-0 opacity-[0.06]" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22/%3E%3C/filter%3E%3Crect width=%22300%22 height=%22300%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');"></div>
+  </div>
+
+  <!-- Ambient glows -->
+  <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-red-500/6 rounded-full blur-[150px]"></div>
+  <div class="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-gold-400/5 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gold-400/12 rounded-full blur-[100px]"></div>
+
+  <!-- Eternal flame SVG — larger, more prominent -->
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none" style="opacity: 0.1;">
+    <svg width="400" height="320" viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pedestal -->
+      <ellipse cx="200" cy="300" rx="100" ry="14" fill="#8B6914"/>
+      <path d="M120 300 L140 240 L260 240 L280 300 Z" fill="#B8860B"/>
+      <rect x="165" y="218" width="70" height="24" rx="3" fill="#8B6914"/>
+      <!-- Star emblem on pedestal -->
+      <path d="M200 230 L205 242 L218 242 L208 250 L212 262 L200 254 L188 262 L192 250 L182 242 L195 242 Z" fill="#DAA520" opacity="0.5"/>
+      <!-- Main flame -->
+      <path d="M200 30 C200 30 168 85 158 130 C148 180 160 215 200 215 C240 215 252 180 242 130 C232 85 200 30 200 30Z" fill="#FFD700" style="animation: flame-flicker 3s ease-in-out infinite; transform-origin: bottom center;"/>
+      <!-- Left flame tongue -->
+      <path d="M200 60 C200 60 155 110 148 155 C140 200 158 218 182 212 C168 190 168 168 180 140 C190 115 200 85 200 60Z" fill="#DAA520" opacity="0.7" style="animation: flame-flicker 2.5s ease-in-out 0.3s infinite; transform-origin: bottom center;"/>
+      <!-- Right flame tongue -->
+      <path d="M200 60 C200 60 245 110 252 155 C260 200 242 218 218 212 C232 190 232 168 220 140 C210 115 200 85 200 60Z" fill="#DAA520" opacity="0.7" style="animation: flame-flicker 2.8s ease-in-out 0.6s infinite; transform-origin: bottom center;"/>
+      <!-- Inner bright core -->
+      <path d="M200 80 C200 80 185 115 182 140 C178 170 188 185 200 185 C212 185 222 170 218 140 C215 115 200 80 200 80Z" fill="#FFF8DC" opacity="0.6"/>
+      <!-- Tip -->
+      <path d="M200 18 C200 18 190 50 190 72 C190 88 200 95 200 95 C200 95 210 88 210 72 C210 50 200 18 200 18Z" fill="#FFFDE0" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <!-- Golden fire glow -->
+  <div class="absolute bottom-0 left-0 right-0 h-[200px] pointer-events-none" style="background: radial-gradient(ellipse 70% 100% at 50% 100%, rgba(218,165,32,0.2) 0%, rgba(184,134,11,0.08) 40%, transparent 70%);"></div>
+
+  <!-- Floating ember particles (more particles via additional elements) -->
+  <div class="particles"></div>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="ember ember-1"></div>
+    <div class="ember ember-2"></div>
+    <div class="ember ember-3"></div>
+    <div class="ember ember-4"></div>
+    <div class="ember ember-5"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative max-w-4xl mx-auto px-4 text-center">
+    <!-- Countdown badge -->
+    {daysLeft > 0 && (
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 border border-gold-400/20" style="background: rgba(218,165,32,0.08); animation: fade-in-down 0.8s ease-out both;">
+        <div class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse"></div>
+        <span class="text-gold-300/80 text-xs font-sans font-bold tracking-wide">
+          До Дня Победы — <span id="countdown-days" class="text-gold-300">{daysLeft}</span> дней
+        </span>
+      </div>
+    )}
+
+    <!-- Year badge -->
+    <div class="flex items-center justify-center gap-4 mb-6" style="animation: fade-in-down 0.8s ease-out both; animation-delay: 0.2s;">
+      <div class="h-px w-12 md:w-24 bg-gradient-to-r from-transparent to-gold-400/40"></div>
+      <div class="flex items-center gap-2.5">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-red-400" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="text-gold-300/80 text-xs font-date font-bold tracking-[0.3em]">1941 — 1945</span>
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-red-400" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="h-px w-12 md:w-24 bg-gradient-to-l from-transparent to-gold-400/40"></div>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]" style="animation: fade-in-up 0.8s ease-out both; animation-delay: 0.4s;">
+      <span class="text-paper-100">Оживите</span>
+      <span class="text-gold-gradient italic"> память</span>
+      <br class="hidden md:block" />
+      <span class="text-paper-100">о ваших героях</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-base md:text-xl text-paper-300/60 mb-10 max-w-2xl mx-auto font-sans leading-relaxed" style="animation: fade-in-up 0.8s ease-out both; animation-delay: 0.6s;">
+      Восстановите фото ветерана, расскажите историю семьи<br class="hidden md:block" /> и проверьте знания о Великой Отечественной войне
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14" style="animation: scale-in 0.7s ease-out both; animation-delay: 0.8s;">
+      <a href="#revive" class="btn-gold text-base px-8 py-4">
+        Оживить фото
+      </a>
+      <a href="#stories-form" class="btn-outline text-base px-8 py-4">
+        Рассказать историю
+      </a>
+    </div>
+
+    <!-- Animated stat counters -->
+    <div class="flex items-center justify-center gap-8 md:gap-12 font-sans" style="animation: fade-in-up 0.8s ease-out both; animation-delay: 1.2s;">
+      <div class="text-center">
+        <div class="text-3xl md:text-4xl font-bold text-gold-300 counter" data-target="1418">0</div>
+        <div class="text-[10px] text-paper-300/40 mt-1 uppercase tracking-wider">дней войны</div>
+      </div>
+      <div class="w-px h-10 bg-gold-400/10"></div>
+      <div class="text-center">
+        <div class="text-3xl md:text-4xl font-bold text-gold-300 counter" data-target="27">0</div>
+        <div class="text-[10px] text-paper-300/40 mt-1 uppercase tracking-wider">млн погибших</div>
+      </div>
+      <div class="w-px h-10 bg-gold-400/10"></div>
+      <div class="text-center">
+        <div class="text-3xl md:text-4xl font-bold text-gold-300 counter" data-target="12">0</div>
+        <div class="text-[10px] text-paper-300/40 mt-1 uppercase tracking-wider">городов-героев</div>
+      </div>
+    </div>
+
+    <!-- Social proof -->
+    <div class="mt-8 flex items-center justify-center gap-2 text-paper-300/25 text-xs font-sans" style="animation: fade-in-up 0.8s ease-out both; animation-delay: 1.6s;">
+      <div class="flex -space-x-1.5">
+        <div class="w-5 h-5 rounded-full bg-gold-600/30 border border-bg-900"></div>
+        <div class="w-5 h-5 rounded-full bg-gold-500/30 border border-bg-900"></div>
+        <div class="w-5 h-5 rounded-full bg-gold-400/30 border border-bg-900"></div>
+      </div>
+      <span>Уже более 1 200 историй на стене памяти</span>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2" style="animation: fade-in-up 1s ease-out both; animation-delay: 2s;">
+    <div class="w-5 h-9 border border-gold-400/30 rounded-full flex justify-center pt-2">
+      <div class="w-1 h-2.5 bg-gold-400/50 rounded-full" style="animation: fade-in-up 1.5s ease-in-out infinite;"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Ember particles */
+  .ember {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #DAA520;
+    border-radius: 50%;
+    opacity: 0;
+    animation: float-up linear infinite;
+  }
+  .ember-1 { left: 20%; bottom: 5%; animation-duration: 6s; animation-delay: 0s; }
+  .ember-2 { left: 45%; bottom: 3%; animation-duration: 8s; animation-delay: 1.5s; width: 3px; height: 3px; }
+  .ember-3 { left: 55%; bottom: 4%; animation-duration: 7s; animation-delay: 3s; }
+  .ember-4 { left: 70%; bottom: 6%; animation-duration: 9s; animation-delay: 4.5s; width: 1.5px; height: 1.5px; }
+  .ember-5 { left: 35%; bottom: 2%; animation-duration: 5.5s; animation-delay: 2s; width: 2.5px; height: 2.5px; }
+</style>
+
+<script>
+  // Animated counters
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target as HTMLElement;
+      const target = parseInt(el.dataset.target || '0', 10);
+      const duration = 2000;
+      const start = performance.now();
+      function easeOutCubic(t: number): number { return 1 - Math.pow(1 - t, 3); }
+      function tick(now: number) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        el.textContent = Math.round(easeOutCubic(progress) * target).toLocaleString('ru-RU');
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      counterObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  // Live countdown update
+  const cdEl = document.getElementById('countdown-days');
+  if (cdEl) {
+    setInterval(() => {
+      const may9 = new Date(2026, 4, 9).getTime();
+      const left = Math.max(0, Math.ceil((may9 - Date.now()) / 86400000));
+      cdEl.textContent = String(left);
+    }, 60000);
+  }
+</script>

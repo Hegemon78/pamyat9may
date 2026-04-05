@@ -1,0 +1,47 @@
+---
+/**
+ * Final call-to-action banner with background photo and emotional messaging.
+ */
+---
+
+<section class="py-20 md:py-28 relative overflow-hidden">
+  <!-- Background photo -->
+  <div class="absolute inset-0">
+    <img src="/images/cta-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/80"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(13,11,9,0.6) 100%);"></div>
+  </div>
+
+  <div class="relative max-w-3xl mx-auto px-4 text-center reveal">
+    <!-- Star decoration -->
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <div class="h-px w-16 bg-gradient-to-r from-transparent to-gold-400/30"></div>
+      <svg viewBox="0 0 24 24" class="w-6 h-6 text-gold-400" fill="currentColor">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <div class="h-px w-16 bg-gradient-to-l from-transparent to-gold-400/30"></div>
+    </div>
+
+    <h2 class="text-3xl md:text-5xl text-paper-50 mb-5 leading-tight">
+      Не дайте памяти<br /><span class="text-gold-gradient">угаснуть</span>
+    </h2>
+
+    <p class="text-paper-300/70 font-sans text-base md:text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+      У каждой семьи есть свой герой. Оживите его фото, расскажите историю,
+      чтобы новые поколения помнили цену победы.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#revive" class="btn-gold text-base px-10 py-4">
+        Оживить фото
+      </a>
+      <a href="#stories-form" class="btn-outline text-base px-10 py-4">
+        Рассказать историю
+      </a>
+    </div>
+
+    <p class="text-paper-300/25 text-xs font-sans mt-8">
+      9 мая 2026 — 81 год Великой Победы
+    </p>
+  </div>
+</section>

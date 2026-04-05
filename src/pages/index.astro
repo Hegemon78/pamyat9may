@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import BeforeAfterSlider from '../components/BeforeAfterSlider.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import HeroStories from '../components/HeroStories.astro';
+import Timeline from '../components/Timeline.astro';
+import MemoryWallPreview from '../components/MemoryWallPreview.astro';
+import FAQ from '../components/FAQ.astro';
+import CTABanner from '../components/CTABanner.astro';
+import Pricing from '../components/Pricing.astro';
+import Quiz from '../components/Quiz.tsx';
+import PhotoUpload from '../components/PhotoUpload.tsx';
+import StoryForm from '../components/StoryForm.tsx';
+import SearchForm from '../components/SearchForm.tsx';
+import OrderForm from '../components/OrderForm.tsx';
+---
+
+<BaseLayout title="Оживите память о ваших героях">
+  {/* 1. Hero — фото вечного огня */}
+  <Hero />
+  <div class="section-divider"></div>
+
+  {/* 2. BeforeAfter + Upload — фон: архивные документы */}
+  <BeforeAfterSlider>
+    <PhotoUpload slot="upload" client:visible />
+  </BeforeAfterSlider>
+
+  <div class="star-divider bg-bg-900">
+    <svg viewBox="0 0 24 24" class="w-4 h-4 text-gold-500/30" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  </div>
+
+  {/* 3. HowItWorks — фон: гвоздики */}
+  <HowItWorks />
+  <div class="section-divider"></div>
+
+  {/* 4. SearchForm — обёртка с фоном карты */}
+  <div class="relative overflow-hidden">
+    <img src="/images/map-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/95"></div>
+    <div class="relative">
+      <SearchForm client:visible />
+    </div>
+  </div>
+
+  <div class="star-divider bg-bg-800">
+    <svg viewBox="0 0 24 24" class="w-4 h-4 text-gold-500/30" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  </div>
+
+  {/* 5. Истории героев — фон: солдаты */}
+  <HeroStories />
+  <div class="section-divider"></div>
+
+  {/* 6. Timeline — фон: военная карта */}
+  <Timeline />
+
+  <div class="star-divider bg-bg-900">
+    <svg viewBox="0 0 24 24" class="w-4 h-4 text-gold-500/30" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  </div>
+
+  {/* 7. Quiz — обёртка с фоном вечного огня */}
+  <div class="relative overflow-hidden">
+    <img src="/images/hero-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-800/94"></div>
+    <div class="relative">
+      <Quiz client:visible />
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  {/* 8. Pricing — обёртка с фоном солдат */}
+  <div class="relative overflow-hidden">
+    <img src="/images/soldiers-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-900/95"></div>
+    <div class="relative">
+      <Pricing />
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  {/* 9. OrderForm — обёртка с фоном карты */}
+  <div class="relative overflow-hidden">
+    <img src="/images/map-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-800/94"></div>
+    <div class="relative">
+      <OrderForm client:visible />
+    </div>
+  </div>
+
+  <div class="star-divider bg-bg-900">
+    <svg viewBox="0 0 24 24" class="w-4 h-4 text-gold-500/30" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  </div>
+
+  {/* 10. StoryForm — обёртка с фоном архивов */}
+  <div class="relative overflow-hidden">
+    <img src="/images/archive-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-bg-800/94"></div>
+    <div class="relative">
+      <StoryForm client:visible />
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  {/* 11. MemoryWall — фон: вечный огонь */}
+  <MemoryWallPreview />
+  <div class="section-divider"></div>
+
+  {/* 12. FAQ — фон: архивные документы */}
+  <FAQ />
+
+  {/* 13. CTA — фон: гвоздики */}
+  <CTABanner />
+</BaseLayout>

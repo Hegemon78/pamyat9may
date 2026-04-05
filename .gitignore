@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.env
+bot/data/*.db
+bot/__pycache__/
+bot/**/__pycache__/
