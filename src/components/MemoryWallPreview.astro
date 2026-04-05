@@ -37,7 +37,7 @@ const sampleStories = [
 
 <section class="py-16 md:py-24 relative overflow-hidden">
   <div class="absolute inset-0">
-    <img src="/images/hero-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+    <img src="/pamyat9may/images/hero-bg.png" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
     <div class="absolute inset-0 bg-bg-900/94"></div>
   </div>
   <div class="relative">
@@ -72,7 +72,7 @@ const sampleStories = [
     </div>
 
     <div class="text-center mt-10 reveal">
-      <a href="/wall" class="btn-outline">
+      <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/wall`} class="btn-outline">
         Все истории на Стене памяти
       </a>
       <span class="mx-4 text-paper-300/20">|</span>
