@@ -1,0 +1,331 @@
+---
+/**
+ * Gallery section — "before/after" showcase of AI photo restoration.
+ *
+ * 12 veteran cards with hover crossfade (black-and-white → colorized).
+ * Click opens modal with short biography.
+ *
+ * TODO: Заменить picsum placeholders на реальные фото через nanobanana (место под реальные фото).
+ * TODO: улучшить hover-анимацию crossfade (плавнее, с эффектом "проявления")
+ * TODO: добавить scroll-reveal анимацию для карточек (сейчас только базовая .reveal)
+ * TODO: pixel-perfect мобильная адаптация (375px, 414px, 768px)
+ * TODO: lazy-load изображения + blur-up placeholder
+ */
+
+// Моковые данные: 12 ветеранов. Placeholder-фото через picsum (позже заменим на реальные).
+const galleryItems = [
+  {
+    id: 'g1',
+    name: 'Иван Алексеевич Смирнов',
+    years: '1918 — 1944',
+    rank: 'Сержант, стрелок',
+    story: 'Призван в 1941 году из Рязани. Участвовал в обороне Москвы, затем — в Сталинградской битве. Погиб при освобождении Минска. Посмертно награждён медалью «За отвагу».',
+    beforeHue: '20, 10%',  // sepia tone
+    afterHue: '35, 55%',   // warm colored
+  },
+  {
+    id: 'g2',
+    name: 'Мария Петровна Комарова',
+    years: '1922 — 2001',
+    rank: 'Санинструктор',
+    story: 'Ушла на фронт добровольцем в 19 лет. Воевала под Ржевом и Курском. Вынесла с поля боя 87 раненых. После войны работала педиатром в родном селе.',
+    beforeHue: '30, 8%',
+    afterHue: '350, 45%',
+  },
+  {
+    id: 'g3',
+    name: 'Пётр Николаевич Захаров',
+    years: '1915 — 1985',
+    rank: 'Старший лейтенант, танкист',
+    story: 'Командир танка Т-34. Прошёл от Курска до Праги. Трижды горел в танке, трижды возвращался в строй. Орден Красной Звезды, орден Отечественной войны I степени.',
+    beforeHue: '15, 12%',
+    afterHue: '40, 50%',
+  },
+  {
+    id: 'g4',
+    name: 'Анна Васильевна Соколова',
+    years: '1920 — 1998',
+    rank: 'Телеграфистка, 3-й Белорусский фронт',
+    story: 'Работала на передовой связи, обеспечивала координацию штаба. Под обстрелом удерживала линию связи 18 часов. Медаль «За боевые заслуги».',
+    beforeHue: '25, 9%',
+    afterHue: '15, 40%',
+  },
+  {
+    id: 'g5',
+    name: 'Фёдор Михайлович Орлов',
+    years: '1912 — 1943',
+    rank: 'Капитан, артиллерист',
+    story: 'Командир батареи противотанковых орудий. Отличился в боях на Курской дуге, уничтожил 9 вражеских танков за один день. Погиб при освобождении Харькова.',
+    beforeHue: '18, 11%',
+    afterHue: '30, 48%',
+  },
+  {
+    id: 'g6',
+    name: 'Евдокия Григорьевна Лебедева',
+    years: '1924 — 2012',
+    rank: 'Связист, партизанский отряд',
+    story: 'В 17 лет ушла в партизанский отряд в Белоруссии. Передавала разведданные через линию фронта. После войны долгое время работала учителем русского языка.',
+    beforeHue: '22, 10%',
+    afterHue: '340, 42%',
+  },
+  {
+    id: 'g7',
+    name: 'Александр Дмитриевич Волков',
+    years: '1916 — 1945',
+    rank: 'Майор, лётчик-штурмовик',
+    story: 'Совершил 142 боевых вылета на Ил-2. Уничтожил десятки единиц вражеской техники. Погиб в последние дни войны при штурме Берлина. Герой Советского Союза посмертно.',
+    beforeHue: '20, 12%',
+    afterHue: '200, 40%',
+  },
+  {
+    id: 'g8',
+    name: 'Галина Семёновна Никитина',
+    years: '1921 — 2008',
+    rank: 'Снайпер, 2-я ударная армия',
+    story: 'Одна из немногих женщин-снайперов на фронте. На её счету 67 подтверждённых попаданий. Ранена под Синявино. Орден Славы III степени.',
+    beforeHue: '28, 8%',
+    afterHue: '10, 45%',
+  },
+  {
+    id: 'g9',
+    name: 'Василий Андреевич Морозов',
+    years: '1914 — 1999',
+    rank: 'Старшина, пехота',
+    story: 'Прошёл всю войну без единого ранения. Участник Парада Победы 24 июня 1945 года. После войны работал трактористом, вырастил семерых детей.',
+    beforeHue: '15, 10%',
+    afterHue: '35, 52%',
+  },
+  {
+    id: 'g10',
+    name: 'Тамара Львовна Грачёва',
+    years: '1923 — 2015',
+    rank: 'Военфельдшер, полевой госпиталь',
+    story: 'Служила в эвакогоспитале, провела сотни операций под обстрелами. Орден Красной Звезды. После войны защитила кандидатскую по хирургии.',
+    beforeHue: '24, 9%',
+    afterHue: '355, 40%',
+  },
+  {
+    id: 'g11',
+    name: 'Сергей Иванович Белов',
+    years: '1919 — 1942',
+    rank: 'Лейтенант, пограничник',
+    story: 'Встретил войну на западной границе 22 июня 1941 года. Его застава держала оборону 11 суток вместо запланированных двух часов. Погиб смертью храбрых.',
+    beforeHue: '20, 11%',
+    afterHue: '140, 38%',
+  },
+  {
+    id: 'g12',
+    name: 'Лидия Николаевна Титова',
+    years: '1925 — 2003',
+    rank: 'Зенитчица, ПВО Ленинграда',
+    story: 'Защищала небо блокадного Ленинграда. Пережила все 900 дней блокады. Её расчёт сбил 4 самолёта противника. Медаль «За оборону Ленинграда».',
+    beforeHue: '22, 10%',
+    afterHue: '200, 42%',
+  },
+];
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden bg-bg-900" id="gallery">
+  <!-- Subtle background glow -->
+  <div class="absolute inset-0 bg-glow-left pointer-events-none"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4">
+    <!-- Header -->
+    <div class="text-center mb-12 reveal">
+      <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">
+        Примеры работ
+      </span>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">
+        Галерея оживлений
+      </h2>
+      <p class="text-paper-300/50 font-sans max-w-xl mx-auto">
+        Наведите курсор, чтобы увидеть оживлённый портрет. Нажмите — узнаете историю героя.
+      </p>
+    </div>
+
+    <!-- Grid of cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 stagger-children">
+      {galleryItems.map((item, i) => (
+        <button
+          type="button"
+          class="gallery-card reveal group relative aspect-[3/4] rounded-xl overflow-hidden glass cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold-400/50"
+          data-gallery-id={item.id}
+          data-name={item.name}
+          data-years={item.years}
+          data-rank={item.rank}
+          data-story={item.story}
+          style={`transition-delay: ${i * 40}ms`}
+        >
+          <!-- BEFORE: black-and-white placeholder -->
+          <div
+            class="gallery-before absolute inset-0 transition-opacity duration-700 ease-out"
+            style={`background: linear-gradient(135deg, hsl(${item.beforeHue}, 15%), hsl(${item.beforeHue}, 8%)), repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 6px); filter: grayscale(100%) sepia(30%);`}
+          >
+            <!-- SVG silhouette of a soldier -->
+            <svg viewBox="0 0 100 140" class="absolute inset-0 w-full h-full opacity-40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <ellipse cx="50" cy="45" rx="18" ry="22" fill="#DAA520" opacity="0.25"/>
+              <ellipse cx="50" cy="32" rx="16" ry="11" fill="#DAA520" opacity="0.15"/>
+              <path d="M28 85 Q32 75 42 75 L58 75 Q68 75 72 85 L78 140 L22 140 Z" fill="#DAA520" opacity="0.2"/>
+              <rect x="30" y="78" width="12" height="3" rx="1" fill="#DAA520" opacity="0.25" transform="rotate(-5 36 80)"/>
+              <rect x="58" y="78" width="12" height="3" rx="1" fill="#DAA520" opacity="0.25" transform="rotate(5 64 80)"/>
+            </svg>
+            <!-- Grain/film texture -->
+            <div class="absolute inset-0 bg-bg-900/40"></div>
+            <!-- "BEFORE" label -->
+            <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-bg-900/80 backdrop-blur-sm">
+              <span class="text-[9px] font-sans font-bold uppercase tracking-wider text-paper-300/70">До</span>
+            </div>
+          </div>
+
+          <!-- AFTER: colorized placeholder -->
+          <div
+            class="gallery-after absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+            style={`background: linear-gradient(135deg, hsl(${item.afterHue}, 35%), hsl(${item.afterHue}, 20%));`}
+          >
+            <!-- Same silhouette but colorized -->
+            <svg viewBox="0 0 100 140" class="absolute inset-0 w-full h-full opacity-60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <ellipse cx="50" cy="45" rx="18" ry="22" fill="#F5E6D3" opacity="0.85"/>
+              <ellipse cx="50" cy="32" rx="16" ry="11" fill="#8B6914" opacity="0.75"/>
+              <path d="M28 85 Q32 75 42 75 L58 75 Q68 75 72 85 L78 140 L22 140 Z" fill="#556B2F" opacity="0.75"/>
+              <rect x="30" y="78" width="12" height="3" rx="1" fill="#DAA520" opacity="0.95" transform="rotate(-5 36 80)"/>
+              <rect x="58" y="78" width="12" height="3" rx="1" fill="#DAA520" opacity="0.95" transform="rotate(5 64 80)"/>
+              <!-- Medal dot -->
+              <circle cx="50" cy="95" r="2.5" fill="#DC143C" opacity="0.9"/>
+            </svg>
+            <!-- "AFTER" label -->
+            <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-gold-400 backdrop-blur-sm">
+              <span class="text-[9px] font-sans font-bold uppercase tracking-wider text-bg-900">После</span>
+            </div>
+          </div>
+
+          <!-- Bottom caption — name on hover -->
+          <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-bg-900/95 via-bg-900/70 to-transparent">
+            <div class="text-paper-50 text-xs md:text-sm font-bold leading-tight line-clamp-2">{item.name}</div>
+            <div class="font-date text-gold-600 text-[10px] md:text-xs mt-0.5">{item.years}</div>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <!-- Note for realism -->
+    <p class="text-center text-paper-300/30 text-xs font-sans mt-8 reveal">
+      Это демонстрационные карточки. Реальные фото и истории появятся после модерации.
+    </p>
+  </div>
+
+  <!-- ============== MODAL ============== -->
+  <div
+    id="gallery-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="gallery-modal-title"
+  >
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-bg-900/90 backdrop-blur-sm" data-modal-close></div>
+
+    <!-- Content -->
+    <div class="relative max-w-lg w-full glass rounded-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto" style="background: rgba(20, 18, 16, 0.98); border: 1px solid rgba(218, 165, 32, 0.25);">
+      <!-- Close -->
+      <button
+        type="button"
+        class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-paper-300/60 hover:text-gold-400 hover:bg-gold-400/10 transition-colors"
+        data-modal-close
+        aria-label="Закрыть"
+      >
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Portrait preview -->
+      <div class="w-24 h-24 md:w-28 md:h-28 rounded-full mx-auto mb-5 bg-gradient-to-br from-gold-400/20 to-olive-500/20 border border-gold-400/30 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" class="w-12 h-12 text-gold-400" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+
+      <h3 id="gallery-modal-title" class="text-paper-50 text-xl md:text-2xl font-bold text-center mb-1" data-modal-name>Имя героя</h3>
+      <p class="text-gold-600 font-date text-sm text-center" data-modal-years>1900 — 1945</p>
+      <p class="text-paper-300/60 text-sm font-sans text-center mt-1 mb-5" data-modal-rank>Звание</p>
+
+      <div class="h-px bg-gold-400/10 mb-5"></div>
+
+      <p class="text-paper-200/80 text-sm md:text-base font-sans leading-relaxed" data-modal-story>
+        История героя появится здесь.
+      </p>
+
+      <div class="mt-6 text-center">
+        <a href="#order-form" class="btn-gold inline-block" data-modal-close>
+          Оживить своё фото
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Gallery modal — simple vanilla JS, no dependencies
+  (function () {
+    const modal = document.getElementById('gallery-modal');
+    if (!modal) return;
+
+    const nameEl = modal.querySelector('[data-modal-name]') as HTMLElement | null;
+    const yearsEl = modal.querySelector('[data-modal-years]') as HTMLElement | null;
+    const rankEl = modal.querySelector('[data-modal-rank]') as HTMLElement | null;
+    const storyEl = modal.querySelector('[data-modal-story]') as HTMLElement | null;
+
+    function openModal(data: DOMStringMap) {
+      if (nameEl) nameEl.textContent = data.name || '';
+      if (yearsEl) yearsEl.textContent = data.years || '';
+      if (rankEl) rankEl.textContent = data.rank || '';
+      if (storyEl) storyEl.textContent = data.story || '';
+      modal!.classList.remove('hidden');
+      modal!.classList.add('flex');
+      modal!.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal!.classList.add('hidden');
+      modal!.classList.remove('flex');
+      modal!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Bind card clicks
+    document.querySelectorAll<HTMLButtonElement>('.gallery-card').forEach((card) => {
+      card.addEventListener('click', () => openModal(card.dataset));
+    });
+
+    // Bind close handlers
+    modal.querySelectorAll('[data-modal-close]').forEach((el) => {
+      el.addEventListener('click', closeModal);
+    });
+
+    // ESC to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .gallery-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .gallery-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(218, 165, 32, 0.15);
+  }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

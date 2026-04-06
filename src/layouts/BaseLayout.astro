@@ -37,16 +37,140 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </a>
         <div class="hidden md:flex items-center gap-6 text-xs text-paper-300/60">
           <a href={`${base}/#revive`} class="hover:text-paper-100 transition-colors">Оживи фото</a>
+          <a href={`${base}/#gallery`} class="hover:text-paper-100 transition-colors">Галерея</a>
           <a href={`${base}/wall`} class="hover:text-paper-100 transition-colors">Стена памяти</a>
           <a href={`${base}/#quiz`} class="hover:text-paper-100 transition-colors">Викторина</a>
           <a href={`${base}/#timeline`} class="hover:text-paper-100 transition-colors">Хронология</a>
         </div>
         <!-- TODO: mobile hamburger menu for frontend developer -->
-        <a href="#revive" class="btn-gold text-xs py-2 px-4">
-          Оживить фото
-        </a>
+        <div class="flex items-center gap-2 md:gap-3">
+          <!-- Login button — opens "coming soon" modal -->
+          <button
+            type="button"
+            id="open-login-modal"
+            class="text-[11px] md:text-xs font-sans font-bold uppercase tracking-wider px-3 md:px-4 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 hover:border-gold-400/50 transition-all"
+            aria-label="Войти в личный кабинет"
+          >
+            <span class="flex items-center gap-1.5">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+              <span class="hidden sm:inline">Войти</span>
+            </span>
+          </button>
+          <a href="#revive" class="btn-gold text-xs py-2 px-3 md:px-4">
+            Оживить фото
+          </a>
+        </div>
       </nav>
     </header>
+
+    <!-- ============== LOGIN MODAL (заглушка) ============== -->
+    <div
+      id="login-modal"
+      class="fixed inset-0 z-[200] hidden items-center justify-center p-4"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="login-modal-title"
+    >
+      <div class="absolute inset-0 bg-bg-900/90 backdrop-blur-sm" data-login-close></div>
+
+      <div class="relative max-w-md w-full glass rounded-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto" style="background: rgba(20, 18, 16, 0.98); border: 1px solid rgba(218, 165, 32, 0.25);">
+        <button
+          type="button"
+          class="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center text-paper-300/60 hover:text-gold-400 hover:bg-gold-400/10 transition-colors"
+          data-login-close
+          aria-label="Закрыть"
+        >
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        <!-- Icon -->
+        <div class="w-16 h-16 rounded-full mx-auto mb-5 bg-gradient-to-br from-gold-400/20 to-gold-600/10 border border-gold-400/30 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-8 h-8 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+
+        <h3 id="login-modal-title" class="text-paper-50 text-xl md:text-2xl font-bold text-center mb-2">
+          Личный кабинет скоро
+        </h3>
+        <p class="text-paper-300/60 font-sans text-sm text-center mb-6">
+          Мы готовим приватное пространство для ваших семейных историй.
+        </p>
+
+        <div class="h-px bg-gold-400/10 mb-6"></div>
+
+        <p class="text-paper-300/70 text-xs font-sans uppercase tracking-wider font-bold mb-3">
+          Что будет доступно
+        </p>
+
+        <ul class="space-y-3 mb-6">
+          <li class="flex items-start gap-3">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 text-gold-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span class="text-paper-300/70 font-sans text-sm">Сохранение всех оживлённых фото в одном месте</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 text-gold-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span class="text-paper-300/70 font-sans text-sm">Приватный / публичный режим истории героя</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 text-gold-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span class="text-paper-300/70 font-sans text-sm">Скачивание в высоком разрешении (до 4K)</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 text-gold-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span class="text-paper-300/70 font-sans text-sm">История заказов и семейных материалов</span>
+          </li>
+        </ul>
+
+        <div class="h-px bg-gold-400/10 mb-5"></div>
+
+        <p class="text-paper-200/70 text-xs font-sans text-center mb-3">
+          Хотите узнать первым о запуске?
+        </p>
+
+        <!-- TODO: подключить реальный email-subscribe endpoint или Telegram Login Widget для auth -->
+        <form id="notify-form" class="flex flex-col sm:flex-row gap-2" onsubmit="return false;">
+          <input
+            type="email"
+            placeholder="ваш.email@example.com"
+            class="flex-1 px-3 py-2 rounded-lg bg-bg-900/60 border border-gold-400/20 text-paper-100 text-sm font-sans placeholder:text-paper-300/30 focus:outline-none focus:border-gold-400/50 transition-colors"
+            aria-label="Email"
+            required
+          />
+          <button
+            type="submit"
+            class="btn-gold text-xs px-4 py-2"
+            id="notify-submit-btn"
+          >
+            Уведомить
+          </button>
+        </form>
+
+        <p class="text-paper-300/30 text-[11px] font-sans text-center mt-4">
+          Никакого спама. Одно письмо — когда кабинет откроется.
+        </p>
+
+        <!-- TODO: подключить Telegram Login Widget для auth через TG -->
+        <!-- TODO: заменить fake submit на реальный API (POST /api/notify-subscribe) -->
+      </div>
+    </div>
 
     <main class="flex-1 pt-12">
       <slot />
@@ -110,6 +234,49 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           (child as HTMLElement).style.setProperty('--i', String(i));
         });
       });
+
+      // Login modal (заглушка — "Личный кабинет скоро")
+      (() => {
+        const loginModal = document.getElementById('login-modal');
+        const openBtn = document.getElementById('open-login-modal');
+        if (!loginModal || !openBtn) return;
+
+        const open = () => {
+          loginModal.classList.remove('hidden');
+          loginModal.classList.add('flex');
+          loginModal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        };
+        const close = () => {
+          loginModal.classList.add('hidden');
+          loginModal.classList.remove('flex');
+          loginModal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        };
+
+        openBtn.addEventListener('click', open);
+        loginModal.querySelectorAll('[data-login-close]').forEach((el) => {
+          el.addEventListener('click', close);
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !loginModal.classList.contains('hidden')) close();
+        });
+
+        // Fake email subscribe — just show a thank-you message
+        const form = document.getElementById('notify-form') as HTMLFormElement | null;
+        const submitBtn = document.getElementById('notify-submit-btn') as HTMLButtonElement | null;
+        if (form && submitBtn) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = form.querySelector('input[type="email"]') as HTMLInputElement | null;
+            if (!input || !input.value.trim()) return;
+            submitBtn.textContent = 'Готово ✓';
+            submitBtn.style.background = 'linear-gradient(135deg, #6B8E23, #556B2F)';
+            input.disabled = true;
+            // TODO: отправка на реальный endpoint (POST /api/notify-subscribe)
+          });
+        }
+      })();
     </script>
   </body>
 </html>

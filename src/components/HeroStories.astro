@@ -1,41 +1,84 @@
 ---
 /**
  * Detailed hero stories — emotional section with veteran profiles,
- * quotes, military details. Encourages users to share their own stories.
+ * quotes, military details. Clicking "Полная история" opens a modal.
  *
- * TODO: Replace SVG portrait placeholders with real photos.
- * TODO: Add "Read full story" modal expand.
- * TODO: Add submission form for user stories.
+ * TODO: Replace SVG portrait placeholders with real photos (nanobanana / архивные фото).
+ * TODO: улучшить scroll-reveal анимацию, добавить parallax фона
+ * TODO: pixel-perfect мобильная адаптация карточек (stack portrait above content)
+ * TODO: Add submission form for user stories (POST /api/stories).
  */
 const stories = [
   {
+    id: 's1',
     name: 'Алексей Иванович Петров',
     rank: 'Старший лейтенант, командир взвода разведки',
     years: '1919 — 1998',
     division: '150-я стрелковая дивизия',
     quote: 'Мы не были героями. Мы просто делали то, что должны были сделать. За страну, за семьи, за тех, кто ждал нас дома.',
     story: 'Прошёл от Москвы до Берлина. Трижды ранен, но каждый раз возвращался в строй. Участвовал в форсировании Днепра и штурме Зееловских высот.',
+    fullStory: 'Алексей Иванович родился в 1919 году в деревне под Тулой. В армию призван в июне 1941-го, сразу после окончания техникума. Прошёл курсы младших командиров и в октябре того же года уже командовал взводом разведки под Москвой.\n\nВ 1943 году за дерзкую ночную операцию по захвату «языка» на Курской дуге получил орден Красной Звезды. В 1944-м форсировал Днепр в составе передовой группы, за что был представлен к званию Героя, но представление «потерялось» в штабных бумагах — получил орден Отечественной войны.\n\nВ апреле 1945 года штурмовал Зееловские высоты. После войны вернулся в родную деревню, работал учителем истории. Всю жизнь переписывался с однополчанами, помогал организовывать встречи ветеранов. Умер в 1998 году, похоронен с воинскими почестями.',
     awards: ['Орден Красной Звезды', 'Медаль «За отвагу»', 'Орден Отечественной войны'],
     color: '#DAA520',
   },
   {
+    id: 's2',
     name: 'Мария Фёдоровна Козлова',
     rank: 'Старшина медицинской службы',
     years: '1923 — 2010',
     division: '62-я армия, Сталинградский фронт',
     quote: 'Каждый раненый, которого удавалось спасти — это чей-то отец, чей-то сын. За каждого из них стоило бороться.',
     story: 'Фронтовая медсестра. Под огнём вынесла более 200 раненых бойцов. Служила в Сталинграде в самые тяжёлые месяцы осени 1942 года.',
+    fullStory: 'Мария Фёдоровна ушла на фронт добровольцем в 18 лет, едва окончив фельдшерские курсы. Попала в 62-ю армию генерала Чуйкова, оборонявшую Сталинград.\n\nВ октябре 1942 года, в самые кровавые дни обороны города, вытаскивала раненых из-под огня в районе тракторного завода. За один день — 23 человека. Была контужена, но продолжала работать. Медаль «За отвагу» получила за конкретный эпизод: под огнём оттащила в укрытие раненого лейтенанта, а затем вернулась за его бойцами.\n\nПосле Сталинграда — Курск, Украина, Польша. Войну закончила в Берлине. После демобилизации окончила медицинский институт, 40 лет проработала хирургом в городской больнице. Воспитала троих детей, семерых внуков. Каждое 9 Мая надевала китель с наградами и шла в школу рассказывать детям о войне.',
     awards: ['Медаль «За отвагу»', 'Орден Красной Звезды', 'Медаль «За оборону Сталинграда»'],
     color: '#CC1133',
   },
   {
+    id: 's3',
     name: 'Николай Фёдорович Волков',
     rank: 'Капитан, лётчик-истребитель',
     years: '1918 — 1943',
     division: '5-й истребительный авиаполк',
     quote: 'Небо — это свобода. И мы дрались за эту свободу на каждой высоте, в каждом бою.',
     story: '186 боевых вылетов, 12 сбитых самолётов противника. Погиб в воздушном бою на Курской дуге, прикрывая отход наземных войск. Герой Советского Союза посмертно.',
+    fullStory: 'Николай Фёдорович с детства мечтал о небе. Окончил Борисоглебскую военно-авиационную школу в 1939 году. Войну встретил на западной границе, где уже в первый день сбил два вражеских бомбардировщика.\n\nВ 1942 году был переведён в гвардейский полк. К лету 1943-го имел на счету 12 личных побед и 4 групповые. Отличался безрассудной храбростью — часто шёл в бой один против трёх-четырёх немецких самолётов.\n\n9 июля 1943 года, на третий день Курской битвы, прикрывал отход наземных войск у села Прохоровка. Вступил в бой с шестёркой «мессершмиттов», сбил двух, но был подбит сам. До последнего не покидал горящую машину, пытаясь вывести её из пике. Похоронен в братской могиле на Прохоровском поле. Звание Героя Советского Союза присвоено посмертно указом от 28 сентября 1943 года.',
     awards: ['Герой Советского Союза', 'Два ордена Красного Знамени'],
+    color: '#6B8E23',
+  },
+  {
+    id: 's4',
+    name: 'Екатерина Андреевна Рязанова',
+    rank: 'Младший сержант, снайпер',
+    years: '1921 — 1994',
+    division: '3-я ударная армия',
+    quote: 'Я не считала, сколько их было. Я считала дни до Победы.',
+    story: 'Одна из первых женщин-снайперов в Красной Армии. Участвовала в боях под Ленинградом и Великими Луками.',
+    fullStory: 'Екатерина Андреевна окончила школу снайперов при Центральном женском движении всевобуча в 1942 году. Была отправлена на Ленинградский фронт.\n\nВ составе снайперского взвода участвовала в операции по прорыву блокады. На её счету 47 подтверждённых попаданий, включая двух немецких офицеров. Была трижды ранена, но каждый раз возвращалась в строй.\n\nПосле войны вернулась в родной Рязань, работала в школе. О своей снайперской работе рассказывала крайне неохотно, считая, что «война — это не гордость, а горе». Воспитала двоих детей. Вместе с мужем-фронтовиком каждый год ездила на места боёв под Ленинградом.',
+    awards: ['Орден Красной Звезды', 'Медаль «За оборону Ленинграда»', 'Медаль «За отвагу»'],
+    color: '#DAA520',
+  },
+  {
+    id: 's5',
+    name: 'Григорий Степанович Мельников',
+    rank: 'Ефрейтор, минёр',
+    years: '1910 — 1971',
+    division: '5-й гвардейский инженерный батальон',
+    quote: 'Сапёр ошибается один раз. Я не ошибался.',
+    story: 'Обезвредил более 1200 мин и фугасов. Участник разминирования Варшавы и Берлина.',
+    fullStory: 'Григорий Степанович — один из легендарных фронтовых сапёров. Призван в 1941-м, когда ему было уже за 30. До войны работал слесарем на тракторном заводе, имел золотые руки.\n\nВ сапёрном батальоне быстро стал незаменимым — за первые полгода обезвредил 300 мин. В 1944-м участвовал в разминировании Варшавы, включая подвалы исторических зданий, заминированные отступающими немцами. За это получил польскую медаль «Крест храбрых».\n\nВ 1945-м — Берлин. Разминировал метро, мосты через Шпрее, рейхстаг. После войны вернулся на завод, проработал там до пенсии. В 1960-х годах писал письма в военкомат с просьбой разрешить ему поехать на разминирование старых боеприпасов — говорил, что «руки помнят». Умер в 1971 году от осколочного ранения, полученного ещё в 1944-м.',
+    awards: ['Орден Славы III степени', 'Медаль «За отвагу»', 'Крест храбрых (Польша)'],
+    color: '#CC1133',
+  },
+  {
+    id: 's6',
+    name: 'Тамара Павловна Жукова',
+    rank: 'Лейтенант медицинской службы',
+    years: '1920 — 2005',
+    division: 'Эвакуационный госпиталь № 1187',
+    quote: 'У нас не было права уставать. За нами были жизни.',
+    story: 'Военный хирург. Провела более 3000 операций за годы войны, в том числе под бомбёжками.',
+    fullStory: 'Тамара Павловна окончила 2-й Московский медицинский институт в июне 1941 года. Дипломы вручали 22 июня — прямо в день начала войны. На следующий день подала рапорт о добровольном уходе на фронт.\n\nСлужила в эвакогоспитале, который перемещался за наступающими частями. В сутки иногда оперировала по 18 часов, без перерывов. Однажды во время бомбёжки закончила операцию под обломками палатки — больного удалось спасти.\n\nПосле войны защитила кандидатскую диссертацию по военно-полевой хирургии. Работала в Институте Склифосовского, воспитала плеяду учеников. Умерла в 2005 году в возрасте 85 лет. По её завещанию в госпитале, где она работала, установлена мемориальная доска с именами всех её коллег-фронтовиков.',
+    awards: ['Орден Отечественной войны II степени', 'Медаль «За боевые заслуги»'],
     color: '#6B8E23',
   },
 ];
@@ -49,74 +92,88 @@ const stories = [
     <div class="absolute inset-0 opacity-[0.015]" style="background-image: repeating-linear-gradient(0deg, #DAA520 0, #DAA520 1px, transparent 0, transparent 80px), repeating-linear-gradient(90deg, #DAA520 0, #DAA520 1px, transparent 0, transparent 80px);"></div>
   </div>
 
-  <div class="relative max-w-5xl mx-auto px-4">
+  <div class="relative max-w-6xl mx-auto px-4">
     <div class="text-center mb-14 reveal">
       <span class="text-gold-500 text-xs font-sans font-bold tracking-[0.2em] uppercase mb-3 block">Они сражались за Родину</span>
-      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">Истории героев</h2>
+      <h2 class="text-3xl md:text-5xl text-paper-50 mb-4">Витрина историй</h2>
       <p class="text-paper-300/50 font-sans max-w-xl mx-auto">
-        За каждой наградой — судьба. За каждым именем — подвиг. Вот лишь некоторые из миллионов историй.
+        За каждой наградой — судьба. За каждым именем — подвиг. Нажмите «Полная история», чтобы узнать больше.
       </p>
     </div>
 
-    <div class="space-y-6 md:space-y-8">
+    <!-- Responsive grid: 1 col mobile / 2 col tablet / 3 col desktop -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
       {stories.map((s, i) => (
-        <article class={`reveal glass rounded-2xl overflow-hidden ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`} style={`transition-delay: ${i * 120}ms`}>
-          <div class="flex flex-col md:flex-row">
-            {/* Portrait placeholder */}
-            <div class="w-full md:w-48 lg:w-56 shrink-0 relative overflow-hidden" style={`background: linear-gradient(135deg, ${s.color}15, ${s.color}08);`}>
-              <div class="flex items-center justify-center h-48 md:h-full">
-                <div class="relative">
-                  {/* Silhouette portrait */}
-                  <svg viewBox="0 0 100 120" class="w-24 h-28 md:w-28 md:h-32" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="40" rx="22" ry="26" fill={s.color} opacity="0.2"/>
-                    <ellipse cx="50" cy="28" rx="20" ry="14" fill={s.color} opacity="0.15"/>
-                    <path d="M25 75 Q28 68 38 68 L62 68 Q72 68 75 75 L80 120 L20 120 Z" fill={s.color} opacity="0.15"/>
-                    <rect x="28" y="70" width="15" height="4" rx="1" fill={s.color} opacity="0.2" transform="rotate(-5 35 72)"/>
-                    <rect x="57" y="70" width="15" height="4" rx="1" fill={s.color} opacity="0.2" transform="rotate(5 64 72)"/>
-                  </svg>
-                  {/* Medal decorations */}
-                  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-1">
-                    {s.awards.slice(0, 3).map((_, j) => (
-                      <div class="w-3 h-3 rounded-full border" style={`border-color: ${s.color}40; background: ${s.color}20;`}></div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              {/* TODO: Replace with real photo — <img src={s.photo} alt={s.name} class="w-full h-full object-cover" /> */}
+        <article
+          class="reveal glass rounded-2xl overflow-hidden flex flex-col"
+          style={`transition-delay: ${i * 80}ms`}
+        >
+          {/* Portrait placeholder — TODO: заменить на реальные фото */}
+          <div class="relative h-40 overflow-hidden" style={`background: linear-gradient(135deg, ${s.color}22, ${s.color}08);`}>
+            <div class="flex items-center justify-center h-full">
+              <svg viewBox="0 0 100 120" class="w-20 h-24" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="50" cy="40" rx="22" ry="26" fill={s.color} opacity="0.25"/>
+                <ellipse cx="50" cy="28" rx="20" ry="14" fill={s.color} opacity="0.18"/>
+                <path d="M25 75 Q28 68 38 68 L62 68 Q72 68 75 75 L80 120 L20 120 Z" fill={s.color} opacity="0.22"/>
+                <rect x="28" y="70" width="15" height="4" rx="1" fill={s.color} opacity="0.3" transform="rotate(-5 35 72)"/>
+                <rect x="57" y="70" width="15" height="4" rx="1" fill={s.color} opacity="0.3" transform="rotate(5 64 72)"/>
+              </svg>
+            </div>
+            {/* Awards count badge */}
+            <div class="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-bg-900/80 backdrop-blur-sm">
+              <svg viewBox="0 0 24 24" class="w-3 h-3 text-gold-400" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span class="text-[10px] font-sans font-bold text-gold-400">{s.awards.length}</span>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div class="p-5 md:p-6 flex flex-col flex-1">
+            <h3 class="text-paper-50 text-base md:text-lg font-bold leading-tight mb-1">{s.name}</h3>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="font-date text-gold-600 text-xs">{s.years}</span>
+              <span class="text-paper-300/20">|</span>
+              <span class="text-paper-300/40 text-xs font-sans truncate">{s.division}</span>
             </div>
 
-            {/* Content */}
-            <div class="flex-1 p-6 md:p-8">
-              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
-                <div>
-                  <h3 class="text-paper-50 text-lg md:text-xl font-bold">{s.name}</h3>
-                  <div class="text-paper-300/50 text-sm font-sans">{s.rank}</div>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="font-date text-gold-600 text-xs">{s.years}</span>
-                    <span class="text-paper-300/20">|</span>
-                    <span class="text-paper-300/30 text-xs font-sans">{s.division}</span>
-                  </div>
-                </div>
-              </div>
+            {/* Quote */}
+            <blockquote class="relative pl-3 mb-3" style={`border-left: 2px solid ${s.color}40;`}>
+              <p class="text-paper-200/70 text-xs italic leading-relaxed line-clamp-3">
+                &laquo;{s.quote}&raquo;
+              </p>
+            </blockquote>
 
-              {/* Quote */}
-              <blockquote class="relative pl-4 mb-4" style={`border-left: 2px solid ${s.color}40;`}>
-                <p class="text-paper-200/70 text-sm italic leading-relaxed">
-                  &laquo;{s.quote}&raquo;
-                </p>
-              </blockquote>
+            <p class="text-paper-300/50 text-xs font-sans leading-relaxed mb-4 line-clamp-3">{s.story}</p>
 
-              <p class="text-paper-300/50 text-sm font-sans leading-relaxed mb-4">{s.story}</p>
-
-              {/* Awards */}
-              <div class="flex flex-wrap gap-2">
-                {s.awards.map((award) => (
-                  <span class="text-[11px] font-sans px-2 py-0.5 rounded-full" style={`background: ${s.color}10; color: ${s.color}; border: 1px solid ${s.color}20;`}>
-                    {award}
-                  </span>
-                ))}
-              </div>
+            {/* Awards */}
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              {s.awards.slice(0, 2).map((award) => (
+                <span class="text-[10px] font-sans px-2 py-0.5 rounded-full" style={`background: ${s.color}12; color: ${s.color}; border: 1px solid ${s.color}25;`}>
+                  {award}
+                </span>
+              ))}
+              {s.awards.length > 2 && (
+                <span class="text-[10px] font-sans px-2 py-0.5 rounded-full text-paper-300/40">
+                  +{s.awards.length - 2}
+                </span>
+              )}
             </div>
+
+            {/* Full story button */}
+            <button
+              type="button"
+              class="story-full-btn mt-auto w-full text-center text-xs font-sans font-bold uppercase tracking-wider py-2 px-3 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 hover:border-gold-400/50 transition-all focus:outline-none focus:ring-2 focus:ring-gold-400/50"
+              data-story-id={s.id}
+              data-name={s.name}
+              data-years={s.years}
+              data-rank={s.rank}
+              data-division={s.division}
+              data-full-story={s.fullStory}
+              data-quote={s.quote}
+            >
+              Полная история →
+            </button>
           </div>
         </article>
       ))}
@@ -131,4 +188,114 @@ const stories = [
       </a>
     </div>
   </div>
+
+  <!-- ============== MODAL: Full story ============== -->
+  <div
+    id="story-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="story-modal-title"
+  >
+    <div class="absolute inset-0 bg-bg-900/90 backdrop-blur-sm" data-story-modal-close></div>
+
+    <div class="relative max-w-2xl w-full glass rounded-2xl p-6 md:p-10 max-h-[90vh] overflow-y-auto" style="background: rgba(20, 18, 16, 0.98); border: 1px solid rgba(218, 165, 32, 0.25);">
+      <button
+        type="button"
+        class="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center text-paper-300/60 hover:text-gold-400 hover:bg-gold-400/10 transition-colors"
+        data-story-modal-close
+        aria-label="Закрыть"
+      >
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <h3 id="story-modal-title" class="text-paper-50 text-2xl md:text-3xl font-bold mb-2" data-modal-name>Имя героя</h3>
+      <p class="text-paper-300/60 font-sans text-sm mb-1" data-modal-rank>Звание</p>
+      <div class="flex items-center gap-3 mb-5">
+        <span class="font-date text-gold-600 text-sm" data-modal-years>1900 — 1945</span>
+        <span class="text-paper-300/20">|</span>
+        <span class="text-paper-300/40 text-xs font-sans" data-modal-division>Подразделение</span>
+      </div>
+
+      <blockquote class="relative pl-4 mb-6 border-l-2 border-gold-400/30">
+        <p class="text-paper-200/80 text-base italic leading-relaxed" data-modal-quote>Цитата</p>
+      </blockquote>
+
+      <div class="h-px bg-gold-400/10 mb-6"></div>
+
+      <div
+        class="text-paper-200/80 text-sm md:text-base font-sans leading-relaxed whitespace-pre-line"
+        data-modal-full-story
+      >
+        Полный текст истории...
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="#stories-form" class="btn-gold inline-block" data-story-modal-close>
+          Рассказать о своём герое
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  (function () {
+    const modal = document.getElementById('story-modal');
+    if (!modal) return;
+
+    const nameEl = modal.querySelector('[data-modal-name]') as HTMLElement | null;
+    const yearsEl = modal.querySelector('[data-modal-years]') as HTMLElement | null;
+    const rankEl = modal.querySelector('[data-modal-rank]') as HTMLElement | null;
+    const divEl = modal.querySelector('[data-modal-division]') as HTMLElement | null;
+    const quoteEl = modal.querySelector('[data-modal-quote]') as HTMLElement | null;
+    const fullEl = modal.querySelector('[data-modal-full-story]') as HTMLElement | null;
+
+    function openModal(data: DOMStringMap) {
+      if (nameEl) nameEl.textContent = data.name || '';
+      if (yearsEl) yearsEl.textContent = data.years || '';
+      if (rankEl) rankEl.textContent = data.rank || '';
+      if (divEl) divEl.textContent = data.division || '';
+      if (quoteEl) quoteEl.textContent = `«${data.quote || ''}»`;
+      if (fullEl) fullEl.textContent = data.fullStory || '';
+      modal!.classList.remove('hidden');
+      modal!.classList.add('flex');
+      modal!.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal!.classList.add('hidden');
+      modal!.classList.remove('flex');
+      modal!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('.story-full-btn').forEach((btn) => {
+      btn.addEventListener('click', () => openModal(btn.dataset));
+    });
+
+    modal.querySelectorAll('[data-story-modal-close]').forEach((el) => {
+      el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
